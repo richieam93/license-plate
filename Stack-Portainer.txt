@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+
+  license_plate_reader:
+    image: python:3.10-slim
+    container_name: license_plate_reader
+    environment:
+
+      - TZ=Europe/Zurich
+    volumes:
+      
+      - /mnt/data/supervisor/homeassistant/license-plate/data:/app/data:rw
+      - /mnt/data/supervisor/homeassistant/license-plate/app.py:/app/app.py:rw
+      - /mnt/data/supervisor/homeassistant/license-plate/requirements.txt:/app/requirements.txt:ro
+      - /mnt/data/supervisor/homeassistant/license-plate/static:/app/static:rw
+      - /mnt/data/supervisor/homeassistant/license-plate/templates:/app/templates:rw
+      - /mnt/data/supervisor/homeassistant/license-plate/uploads:/app/uploads:rw
+      - /mnt/data/supervisor/homeassistant/license-plate/models:/app/models:rw
+      - /mnt/data/supervisor/homeassistant/license-plate/detector.py:/app/detector.py:rw
+      - /mnt/data/supervisor/homeassistant/license-plate/rtsp_handler.py:/app/rtsp_handler.py:rw
+
+      
+    working_dir: /app
+    ports:
+      - "8087:5000"
+    restart: unless-stopped
+    command: >
+      sh -c "
+      apt-get update &&
+      apt-get install -y --no-install-recommends ffmpeg libsm6 libxext6 libxrender-dev tesseract-ocr tesseract-ocr-deu &&
+      python3 -m venv /app/venv &&
+      /app/venv/bin/pip install --upgrade pip &&
+      /app/venv/bin/pip install -r requirements.txt &&
+      /app/venv/bin/python app.py
+      "
