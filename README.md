@@ -12,10 +12,8 @@ A powerful, AI-powered license plate and vehicle recognition system built for Ho
 - ✅ Fully compatible with Raspberry Pi, Intel, AMD
 
 ## Installation
-1. In HA: **Einstellungen → System → Add-on Store → ⋮ → „Neuer Add-on-Store“**
-2. Füge hinzu: `https://github.com/yourusername/platevision-addon`
-3. Suche nach „PlateVision“ → Installieren → Konfigurieren → Starten
-4. Öffne unter: `http://[HA_IP]:5000`
+
+
 
 ## Configuration
 | Option | Description |
